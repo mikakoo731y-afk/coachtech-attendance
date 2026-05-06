@@ -60,6 +60,54 @@ Docker / Docker Compose: 開発環境のコンテナ化
 docker-compose exec php php artisan test
 
 **6.ER図**
+```mermaid
+erDiagram
+    users ||--o{ attendances : "1対多"
+    users ||--o{ attendance_correct_requests : "1対多"
+    attendances ||--o{ rests : "1対多"
+    attendances ||--o{ attendance_correct_requests : "1対多"
+    attendance_correct_requests ||--o{ rest_correct_requests : "1対多"
+
+    users {
+        bigint id PK
+        string name "氏名"
+        string email "メールアドレス"
+        string password "パスワード"
+        tinyInteger role "0:一般, 1:管理者"
+    }
+
+    attendances {
+        bigint id PK
+        bigint user_id FK "ユーザーID"
+        date date "勤務日"
+        time clock_in "出勤時間"
+        time clock_out "退勤時間"
+    }
+
+    rests {
+        bigint id PK
+        bigint attendance_id FK "勤怠ID"
+        time start_time "休憩開始"
+        time end_time "休憩終了"
+    }
+
+    attendance_correct_requests {
+        bigint id PK
+        bigint attendance_id FK "勤怠ID"
+        bigint user_id FK "ユーザーID"
+        time proposed_clock_in "修正後出勤"
+        time proposed_clock_out "修正後退勤"
+        text reason "修正理由"
+        tinyInteger status "1:承認待ち, 2:承認済み"
+    }
+
+    rest_correct_requests {
+        bigint id PK
+        bigint attendance_correct_request_id FK "勤怠修正申請ID"
+        time proposed_start_time "修正後休憩開始"
+        time proposed_end_time "修正後休憩終了"
+    }
+```
 
 
 
