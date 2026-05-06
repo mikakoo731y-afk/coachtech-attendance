@@ -1,0 +1,75 @@
+/* 共通設定：箱のサイズ計算を分かりやすくする */
+
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.header {
+    width: 100%;
+    background-color: #000; /* 背景を黒に設定 */
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.header__inner {
+    max-width: 1540px; /* PC最大幅 */
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__logo {
+    margin: 0;
+    line-height: 1;
+}
+
+.header__logo-img {
+    height: 24px; /* ロゴのサイズ調整 */
+    display: block;
+}
+
+/* ログイン前などナビがない場合の考慮 */
+.header__nav-list {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header__nav-link,
+.header__nav-button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Main Content Layout
+   ========================================================================== */
+.main {
+    margin-top: 64px;
+    width: 100%;
+}
+
+.main__inner {
+    max-width: 1540px;
+    margin: 0 auto;
+}
+
+.error__msg{
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: bold;
+}

@@ -1,0 +1,845 @@
+/* =========================================
+   Admin Login 
+   ========================================= */
+
+.login {
+    display: flex;
+    justify-content: center;
+    /* ヘッダー固定分(64px)を考慮し、画面中央に配置 */
+    height: calc(100vh - 64px);
+    margin-top: 64px;
+    background-color: #fff;
+    padding-top: 80px; /* 上部からの位置調整 */
+    box-sizing: border-box;
+    overflow: hidden; /* スクロール防止 */
+}
+
+.login__inner {
+    width: 100%;
+    max-width: 450px; /* 画像のバランスに合わせた幅 */
+    padding: 0 20px;
+}
+
+.login__heading {
+    margin-bottom: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #000;
+}
+
+/* フォーム構造 */
+.login__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login__group {
+    margin-bottom: 25px;
+}
+
+.login__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+.login__input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* エラーメッセージ（共通クラスがある場合） */
+.login__error-msg {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #ff0000;
+    font-weight: bold;
+}
+
+/* ログインボタン */
+.login__actions {
+    margin-top: 30px;
+}
+
+.login__button {
+    width: 100%;
+    padding: 14px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.login__button:hover {
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .login__inner {
+        max-width: 480px; /* PC画面で見栄えの良い幅に微調整 */
+    }
+}
+
+/* ====================================
+   申請一覧 (admin/correction_request/list.blade.php) 
+   ================================== */
+
+.correction-list {
+    /* 他の管理者画面と高さを揃えてスクロールを防止 */
+    height: calc(100vh - 64px); 
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 見出し：左端の黒線位置を固定 */
+.correction-list__heading {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+/* タブナビゲーション：承認待ち・承認済み */
+.correction-list__nav {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 15px;
+}
+
+.correction-list__tab {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.correction-list__tab-item {
+    margin-right: 40px;
+}
+
+.correction-list__tab-link {
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* アクティブタブの下線 */
+.correction-list__tab-item.is-active .correction-list__tab-link {
+    color: #000;
+    border-bottom: 2px solid #000;
+    margin-bottom: -1px;
+}
+
+/* 白い枠（カード）：幅を1100px（PC時）に統一 */
+.correction-list__card {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 10px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    /* データが多い場合はカード内だけでスクロール */
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+/* テーブルスタイル */
+.correction-list__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.correction-list__thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.correction-list__label {
+    text-align: left;
+    font-size: 14px;
+    color: #888;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.correction-list__data {
+    padding: 12px 0;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+/* 詳細リンク */
+.correction-list__detail-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .correction-list__heading,
+    .correction-list__nav,
+    .correction-list__card {
+        max-width: 1000px; /* 他の管理者画面とピッタリ一致させる */
+    }
+}
+/* ==========================================
+   スタッフ一覧 (admin/staff/list.blade.php)
+   ========================================== */
+
+.staff-list {
+    /* 1画面に収め、背景グレーを維持 */
+    height: calc(100vh - 64px);
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 見出し：1000px幅で左端を揃える */
+.staff-list__heading {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+    color: #000;
+}
+
+/* テーブルを包む白いカード：幅を1000pxで統一 */
+.staff-list__card {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 10px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    /* 人数が多い場合に備えてカード内スクロール */
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+/* テーブルスタイル */
+.staff-list__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.staff-list__thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.staff-list__label {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.staff-list__data {
+    padding: 15px 0;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+/* スタッフ詳細へのリンク（右端） */
+.staff-list__detail-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.staff-list__detail-link:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .staff-list__heading,
+    .staff-list__card {
+        max-width: 1000px; /* 全ての管理画面と幅を統一 */
+    }
+}
+
+
+/* =========================================
+スタッフ別勤怠一覧(staff/attendance.blade.php
+　==========================================*/
+
+
+.staff-attendance {
+    /* 画面いっぱいにグレーを敷き、スクロールを防止 */
+    height: calc(100vh - 64px); 
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 見出し：1000px幅で左端を揃える */
+.staff-attendance__heading {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+/* 月移動ナビゲーション */
+.staff-attendance__nav {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.staff-attendance__nav-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 月選択表示 */
+.staff-attendance__month-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.staff-attendance__month-text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 勤怠カード：幅を1000pxで統一 */
+.staff-attendance__card {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 10px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    /* データが多い場合に備えてカード内のみスクロール */
+    overflow-y: auto;
+    max-height: 55vh; /* CSV出力ボタンが見えるように少し高さを抑える */
+}
+
+/* テーブルスタイル */
+.staff-attendance__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.staff-attendance__thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.staff-attendance__label {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.staff-attendance__data {
+    padding: 12px 0;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+/* 詳細リンク */
+.staff-attendance__detail-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* CSV出力ボタン：カードの外・左寄せ（見出しと揃える） */
+.staff-attendance__actions {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.staff-attendance__csv-link {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.staff-attendance__csv-link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .staff-attendance__heading,
+    .staff-attendance__nav,
+    .staff-attendance__card,
+    .staff-attendance__actions {
+        max-width: 1000px; /* 他の管理者画面とピッタリ合わせる */
+    }
+}
+
+/* ==========================================
+   スタッフ別勤怠一覧 (admin/attendance/list.blade.php)
+   ==========================================*/
+
+  
+.attendance {
+    height: calc(100vh - 64px); /* ヘッダー分を引いて1画面に固定 */
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 見出し：左端を揃える */
+.attendance__heading {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+    color: #000;
+}
+
+/* 日付移動ナビゲーション */
+.attendance__nav {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.attendance__nav-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* 日付選択（カレンダーアイコン部分） */
+.attendance__date-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.attendance__date-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.attendance__date-input {
+    display: none; /* input本体は隠す */
+}
+
+/* テーブルを包む白いカード（幅を統一） */
+.attendance__card {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 10px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    /* スタッフ数が多い場合に備えてカード内スクロールを許可 */
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+/* テーブルスタイル */
+.attendance__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance__thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.attendance__label {
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.attendance__data {
+    padding: 15px 0;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+/* 詳細リンク */
+.attendance__detail-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.attendance__detail-link:hover {
+    text-decoration: underline;
+}
+
+/* データがない時 */
+.attendance__empty {
+    padding: 40px 0;
+    text-align: center;
+    color: #999;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .attendance__heading,
+    .attendance__nav,
+    .attendance__card {
+        max-width: 1000px; /* 全ての「白い箱」を1100pxで統一 */
+    }
+}
+
+/* =========================================
+   勤怠詳細(admin/attendance/detail.blade.php)
+   ========================================= */
+.attendance-detail {
+    /* ヘッダー分を引いて1画面に収める */
+    height: calc(100vh - 64px);
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden; /* 全体のスクロールを禁止 */
+}
+
+/* 見出し：左端を揃える（1000px基準） */
+.attendance-detail__heading {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+/* フォーム本体 */
+.attendance-detail__form {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 白い枠（カード部分） */
+.attendance-detail__card {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #eee;
+}
+
+/* 各項目行 */
+.attendance-detail__group {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.attendance-detail__label {
+    width: 250px; /* ラベル幅を広めに設定 */
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.attendance-detail__input-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.attendance-detail__text--bold {
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 40px;
+}
+
+.attendance-detail__input {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.attendance-detail__separator {
+    margin: 0 15px;
+}
+
+.attendance-detail__textarea {
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 60px; /* 1画面に収めるための固定 */
+    resize: none;
+    font-size: 14px;
+}
+
+
+
+/* ボタンエリア：白い枠の外・右寄せ */
+.attendance-detail__actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+}
+
+.attendance-detail__button {
+    padding: 10px 60px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.attendance-detail__error {
+    color: red;
+    margin-left: 210px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .attendance-detail__heading,
+    .attendance-detail__form {
+        max-width: 1000px; /* 他の管理画面と幅を統一 */
+    }
+}
+
+/*＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+　 承認詳細画面 (admin/correction_request/approve.blade.php)
+　＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ */
+.approval-detail {
+    /* ヘッダー分を引いて1画面に固定 */
+    height: calc(100vh - 64px);
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 見出し：他の詳細画面とデザイン・位置を統一 */
+.approval-detail__title {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+/* フォーム本体 */
+.approval-detail__form {
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* 白い枠（カード部分） */
+.approval-detail__card {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #eee;
+}
+
+/* 項目行：テーブルのようなレイアウトを再現 */
+.approval-detail__row {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* 最後の項目だけ線を消す（Bladeのクラスに対応） */
+.approval-detail__row--no-border {
+    border-bottom: none;
+}
+
+/* ラベル：幅を統一 */
+.approval-detail__label {
+    width: 250px;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* 値（右側テキスト） */
+.approval-detail__value {
+    flex: 1;
+    font-size: 15px;
+    margin: 0;
+}
+
+/* 承認ボタン：白い枠の外・右寄せ */
+.approval-detail__actions {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 25px;
+}
+
+.approval-detail__button {
+    padding: 10px 60px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.approval-detail__button:hover {
+    opacity: 0.7;
+}
+
+.approval-detail__approved-text {
+    padding: 10px 60px;
+    background-color: #888; /* グレー背景 */
+    color: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+    cursor: default;
+}
+/* ==========================================================================
+   PC Responsive (1400px - 1540px)
+   ========================================================================== */
+@media screen and (min-width: 1400px) {
+    .approval-detail__title,
+    .approval-detail__form {
+        max-width: 1000px; /* 全ての詳細・一覧画面と幅を統一 */
+    }
+}
