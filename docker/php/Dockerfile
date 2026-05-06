@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y \
 # PHP拡張のインストール
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    echo "Asia/Tokyo" > /etc/timezone
+
 # Composerのインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
