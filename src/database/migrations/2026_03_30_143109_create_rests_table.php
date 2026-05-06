@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('rests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
-            // 休憩開始、休憩終了
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->timestamps();

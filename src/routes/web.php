@@ -20,7 +20,7 @@ Route::get('/register', function () {
 
 // PG07: 管理者ログイン関連
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login.view');
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.exec'); // ★ログイン実行を追加
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.exec'); 
 
 // --------------------------------------------------
 // 一般ユーザー・管理者 共通認証ルート

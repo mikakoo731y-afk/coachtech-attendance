@@ -17,7 +17,7 @@ return new class extends Migration
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->time('proposed_clock_in')->nullable();
         $table->time('proposed_clock_out')->nullable();
-        $table->text('reason'); // 修正理由（備考）
+        $table->text('reason');
         $table->tinyInteger('status')->default(1)->comment('1:承認待ち, 2:承認済み');
         $table->timestamps();
     });

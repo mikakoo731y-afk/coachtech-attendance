@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('rest_correct_requests', function (Blueprint $table) {
         $table->id();
-        // 外部キー制約。名前が長すぎるエラーを避けるため第2引数で名前を指定
         $table->foreignId('attendance_correct_request_id',)
             ->constrained('attendance_correct_requests')
             ->onDelete('cascade');
